@@ -85,3 +85,46 @@ p {
     animation: none !important;
   }
 }
+
+/* buttons (for 404 'return to axioms' and future links) */
+.button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: #9b5de5;
+  color: #fff;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transition: background 0.2s ease, transform 0.06s ease;
+}
+.button:hover { background: #b07df1; }
+.button:active { transform: translateY(1px); }
+
+/* accessible focus ring for links and buttons */
+a:focus-visible,
+.button:focus-visible {
+  outline: 2px solid #b07df1;
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+
+/* optional content wrapper for long pages (keeps lines readable) */
+.container {
+  width: min(90vw, 900px);
+  margin: 0 auto;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* hero sizing tweaks (useful on 404) */
+.hero h1 { font-size: clamp(2.25rem, 6vw, 4rem); margin: 0.25em 0 0.5em; }
+.hero p  { font-size: clamp(1rem, 2.2vw, 1.25rem); margin: 0 0 2rem; }
+
+/* utility: slightly dim secondary text when needed */
+.muted { color: #bbb; }
+
+/* small-screen spacing nudge */
+@media (max-width: 480px) {
+  .button { padding: 0.65rem 1.25rem; }
+}
