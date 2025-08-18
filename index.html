@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- primary seo tags -->
   <title>axioms – cinematic mathematics</title>
   <meta name="title" content="axioms – cinematic mathematics">
-  <meta name="description" content="axioms creates cinematic mathematics videos and resources for gifted students. explore concepts with houdini, davinci resolve, and mathematica.">
+  <meta name="description"
+    content="axioms creates cinematic mathematics videos and resources for gifted students. explore concepts with houdini, davinci resolve, and mathematica.">
 
   <!-- open graph / facebook -->
   <meta property="og:type" content="website">
@@ -35,10 +37,50 @@
   <!-- your existing css/js includes go here -->
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
+  <!-- background logo (decorative) -->
+  <img id="bg-logo" src="/images/axioms_icon_1000.png" alt="" aria-hidden="true">
   <header>
     <h1>axioms</h1>
     <p>a mathematical journey</p>
   </header>
+
+  <script>
+    (() => {
+      const img = document.getElementById('bg-logo');
+      if (!img) return;
+
+      // respect reduced motion
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) return;
+
+      // random ranges (ms) — tweak to taste
+      const MIN_PAUSE = 4000;   // min time between spins
+      const MAX_PAUSE = 15000;  // max time between spins
+      const MIN_SPEED = 6000;   // min spin duration
+      const MAX_SPEED = 20000;  // max spin duration
+
+      const rand = (min, max) => Math.random() * (max - min) + min;
+
+      function spinOnce() {
+        const dur = rand(MIN_SPEED, MAX_SPEED);
+        img.style.setProperty('--spin-duration', `${dur}ms`);
+        // restart the animation by toggling the class
+        img.classList.remove('spinning');
+        void img.offsetWidth; // force reflow
+        img.classList.add('spinning');
+      }
+
+      function scheduleNext() {
+        const pause = rand(MIN_PAUSE, MAX_PAUSE);
+        setTimeout(() => { spinOnce(); scheduleNext(); }, pause);
+      }
+
+      // random initial delay so it does not feel predictable
+      setTimeout(() => { spinOnce(); scheduleNext(); }, rand(500, 5000));
+    })();
+  </script>
 </body>
+
 </html>

@@ -4,15 +4,18 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  color: #eee; /* light text on dark background */
-  background-color: #121212; /* dark gray, not pure black */
+  color: #eee;
+  /* light text on dark background */
+  background-color: #121212;
+  /* dark gray, not pure black */
 
   /* deep purple radial gradient */
-  background-image: radial-gradient(
-    ellipse at center,
-    rgba(102, 51, 153, 0.6) 0%,    /* deep purple core */
-    rgba(18, 18, 18, 1) 70%        /* fade into dark gray */
-  );
+  background-image: radial-gradient(ellipse at center,
+      rgba(102, 51, 153, 0.6) 0%,
+      /* deep purple core */
+      rgba(18, 18, 18, 1) 70%
+      /* fade into dark gray */
+    );
 
   min-height: 100vh;
   display: flex;
@@ -34,4 +37,51 @@ p {
   font-size: 1.25rem;
   color: #bbb;
   margin-top: 0;
+}
+
+/* tuneable knobs */
+:root {
+  --bg-logo-opacity: 0.10;
+  /* 0.05–0.18 works well */
+  --bg-logo-size: min(70vmin, 1000px);
+}
+
+/* keep it behind everything */
+#bg-logo {
+  position: fixed;
+  inset: 0;
+  /* center via margin:auto below */
+  margin: auto;
+  width: var(--bg-logo-size);
+  height: auto;
+  opacity: var(--bg-logo-opacity);
+  pointer-events: none;
+  z-index: -1;
+  /* behind page content */
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+/* one full spin when the class is applied */
+@keyframes spin360 {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#bg-logo.spinning {
+  animation-name: spin360;
+  animation-duration: var(--spin-duration, 12s);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  /* exactly one rotation */
+  animation-fill-mode: forwards;
+  /* stay at final angle */
+}
+
+/* accessibility: honor reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #bg-logo.spinning {
+    animation: none !important;
+  }
 }
